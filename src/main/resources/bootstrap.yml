@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+spring:
+  boot:
+    admin:
+      discovery:
+        ignored-services: "admin-service"
+
+  application:
+    name: "admin-service"
+
+  profiles:
+    include:
+      - eureka-client-${spring.profiles.active}
+      - log
+      - management
+  cloud:
+    services:
+      registrationMethod: route
+    config:
+      import-check:
+        enabled: false
+      enabled: true
+      uri: https://pr-microservice-config-server.herokuapp.com
+      label: master
+      fail-fast: true
